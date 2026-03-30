@@ -1,36 +1,58 @@
-# Experiment 11(d): Topological Sort
+# Ex. No: 17D - Topological Sorting of a DAG
 
-## Aim
-To write a Python program to print the topological sorting of a Directed Acyclic Graph (DAG).
+## AIM:
+To write a Python program to **print topological sorting** of a **Directed Acyclic Graph (DAG)**.
 
----
+## ALGORITHM:
 
-## Algorithm
+**Step 1**: Create a graph and add edges to represent relationships between nodes.
 
-1. **Create a graph**: 
-   - Represent the graph using an adjacency list where each node points to its adjacent nodes (edges).
+**Step 2**: Use a `visited` set to keep track of visited nodes and a **stack** (or list) to record the **order of nodes** after processing.
 
-2. **DFS Traversal**:
-   - Use a DFS approach to traverse the graph. Keep track of visited nodes to avoid revisiting them.
-   - For each node, explore all its neighbors recursively.
+**Step 3**: Perform **DFS** for each unvisited node:
+- Explore all its neighbors.
+- Recursively apply DFS to each unvisited adjacent node.
+- After all neighbors are visited, **push the current node onto the stack**.
 
-3. **Departure Array**:
-   - Maintain an array to record the nodes in reverse order of their completion times. This will represent the topological order.
+**Step 4**: After DFS is complete for all nodes, the stack will contain nodes in **reverse order of their completion time**.
 
-4. **Topological Sort**:
-   - After DFS completion for all unvisited nodes, print the nodes in the reverse of the departure array to get the topological sorting.
-
-5. **End the program**:
-   - Print the topological order of the nodes.
-
----
-
-## Program
+**Step 5**: Print the stack in **reverse** to get the **topological order**.
+## PYTHON PROGRAM
 
 ```
+def addEdge(u, v):
+	global adj
+	adj[u].append(v)
+def DFS(v):
+	global visited, departure, time
+	visited[v] = 1
+	for i in adj[v]:
+		if visited[i] == 0:
+			DFS(i)
+	departure[time] = v
+	time += 1
+def topologicalSort():
+    for i in range(V):
+        if (visited[i]==0):
+            DFS(i)
+    for i in range(V-1,-1,-1):
+        print(departure[i],end=" ")
+if __name__ == '__main__':
+	V,time, adj, visited, departure = 6, 0, [[] for i in range(7)], [0 for i in range(7)],[-1 for i in range(7)]
+	addEdge(5, 2)
+	addEdge(5, 0)
+	addEdge(4, 0)
+	addEdge(4, 1)
+	addEdge(2, 3)
+	addEdge(3, 1)
 
+	print("Topological Sort of the given graph is")
+	topologicalSort()
 ```
 
 ## OUTPUT
+![image](https://github.com/user-attachments/assets/9d82556f-c343-4ad9-af73-db4b8d91f8a7)
+
 
 ## RESULT
+Hence, The program is successfully executed and the topological sorting of the given Directed Acyclic Graph (DAG) is verified.
